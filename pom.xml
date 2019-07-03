@@ -10,40 +10,86 @@
     <name>#NAME</name>
     <description>#DESC</description>
     <url>fonowizja.pl</url>
-  
+
     <properties>
-             <!-- https://maven.apache.org/general.html#encoding-warning -->
+        <!-- https://maven.apache.org/general.html#encoding-warning -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-             <!-- https://maven.apache.org/general.html#special-characters-site -->
+        <!-- https://maven.apache.org/general.html#special-characters-site -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.java.version>1.8</project.java.version>
         <maven.compiler.source>${project.java.version}</maven.compiler.source>
         <maven.compiler.target>${project.java.version}</maven.compiler.target>
-      <!-- see source for the plugins to verify if those can be skipped, they should IIRC -->
+        <!-- see source for the plugins to verify if those can be skipped, they should IIRC -->
         <maven.compiler.encoding>${project.build.sourceEncoding}</maven.compiler.encoding>
         <maven.resources.encoding>${project.build.sourceEncoding}</maven.resources.encoding>
         <version.maven>3.5.3</version.maven>
-      <!-- plugin versions should go here, so below they can be omitted -->
+        <!-- plugin versions should go here, so below they can be omitted -->
         <version.plugin.maven.enforcer>3.0.0-M2</version.plugin.maven.enforcer>
         <version.plugin.maven.jar>3.1.0</version.plugin.maven.jar>
         <version.plugin.maven.compiler>3.8.0</version.plugin.maven.compiler>
         <version.plugin.maven.resources>3.1.0</version.plugin.maven.resources>
+
+
+        <version.maven>3.6.0</version.maven>
+        <version.compilerPlugin>3.8.0</version.compilerPlugin>
+        <version.mysql>8.0.13</version.mysql>
+        <version.hibernate>5.4.3.Final</version.hibernate>
+        <version.postgresql>9.1-901-1.jdbc4</version.postgresql>
+        <version.h2database>1.4.190</version.h2database>
+        <version.testng>6.14.3</version.testng>
     </properties>
 
     <dependencies>
-<dependency>
-<groupId>org.testng</groupId>
-<artifactId>testng</artifactId>
-<version>6.14.3</version>
-<scope>test</scope>
-</dependency>
-<dependency>
-<groupId>org.apache.logging.log4j</groupId>
-<artifactId>log4j-core</artifactId>
-<version>2.11.2</version>
-</dependency>
-        <!-- #Your dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${version.hibernate}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.postgresql}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.h2database}</version>
+            <!--We want to use H2 database while the application works, that's why we use runtime scope.
+            It indicates that the dependency is not required for compilation, but is for execution.
+            More information: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html-->
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${version.testng}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    <!-- #Your dependencies -->
+
 
     <build>
         <plugins>
@@ -60,7 +106,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                <!-- helps with plugin versions, so you are more up-to-date -->
+                                    <!-- helps with plugin versions, so you are more up-to-date -->
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
                             </rules>
@@ -86,7 +132,7 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
-            </plugin>                 
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -95,7 +141,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-<!-- if diff enconding than UTF8 is needed: https://maven.apache.org/plugins/maven-resources-plugin/examples/encoding.html -->
+                <!-- if diff enconding than UTF8 is needed: https://maven.apache.org/plugins/maven-resources-plugin/examples/encoding.html -->
                 <version>${version.plugin.maven.resources}</version>
             </plugin>
         </plugins>
